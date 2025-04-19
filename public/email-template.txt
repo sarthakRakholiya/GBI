@@ -1,0 +1,28 @@
+New Contact Form Submission
+
+Hello,
+
+You have received a new message from the contact form on your website.
+
+Contact Information:
+Name: {{name}}
+Email: {{email}}
+Phone: {{phone}}
+Subject: {{subject}}
+
+Message:
+{{message}}
+
+Please respond to this inquiry at your earliest convenience.
+
+Visit our website: https://gayatri-bearings.com
+
+---
+This email was sent from the contact form on Gayatri Bearing Industries website.
+
+Follow us on social media:
+Facebook: https://www.facebook.com/gayatri.bearings
+LinkedIn: https://www.linkedin.com/company/gayatri-bearings
+Instagram: https://www.instagram.com/gayatri.bearings
+
+© 2023 Gayatri Bearing Industries. All rights reserved. 

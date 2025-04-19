@@ -1,0 +1,24 @@
+
+# All search engines
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.gbiprecisionbearings.com/sitemap.xml
+
+# Disallow specific folders
+Disallow: /admin/
+Disallow: /private/
+
+# Specific search engine directives
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /

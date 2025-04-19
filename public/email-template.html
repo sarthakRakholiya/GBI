@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Contact Form Submission</title>
+    <style>
+      /* Reset styles for email clients */
+      body,
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      table,
+      td {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 1px solid #eaeaea;
+      }
+
+      .logo {
+        max-width: 150px;
+        height: auto;
+        margin-bottom: 15px;
+      }
+
+      h1 {
+        color: #c53030; /* GBI red color */
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .content {
+        padding: 30px 0;
+      }
+
+      .message-box {
+        background-color: #f9f9f9;
+        border-left: 4px solid #c53030; /* GBI red color */
+        padding: 15px;
+        margin: 20px 0;
+      }
+
+      .contact-info {
+        margin: 25px 0;
+      }
+
+      .contact-info p {
+        margin-bottom: 8px;
+      }
+
+      .contact-info strong {
+        color: #c53030; /* GBI red color */
+        display: inline-block;
+        width: 100px;
+      }
+
+      .button {
+        display: inline-block;
+        background-color: #c53030; /* GBI red color */
+        color: #ffffff;
+        text-decoration: none;
+        padding: 12px 25px;
+        border-radius: 4px;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px 0;
+        border-top: 1px solid #eaeaea;
+        font-size: 12px;
+        color: #777;
+      }
+
+      .social-links {
+        margin: 15px 0;
+      }
+
+      .social-links a {
+        display: inline-block;
+        margin: 0 10px;
+        color: #c53030; /* GBI red color */
+        text-decoration: none;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .container {
+          width: 100% !important;
+          padding: 10px !important;
+        }
+
+        .content {
+          padding: 20px 0 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- GBI Logo SVG inside red box -->
+        <svg
+          width="150"
+          height="50"
+          viewBox="0 0 150 50"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="0"
+            y="0"
+            width="150"
+            height="50"
+            fill="#c53030"
+            rx="5"
+            ry="5"
+          />
+          <text
+            x="75"
+            y="30"
+            font-family="Arial"
+            font-size="20"
+            font-weight="bold"
+            fill="#ffffff"
+            text-anchor="middle"
+          >
+            GBI
+          </text>
+        </svg>
+        <h1>New Contact Form Submission</h1>
+      </div>
+
+      <div class="content">
+        <p>Hello,</p>
+
+        <p>
+          You have received a new message from the contact form on your website.
+        </p>
+
+        <div class="contact-info">
+          <p><strong>Name:</strong> {{name}}</p>
+          <p><strong>Email:</strong> {{email}}</p>
+          <p><strong>Phone:</strong> {{phone}}</p>
+          <p><strong>Subject:</strong> {{subject}}</p>
+        </div>
+
+        <div class="message-box">
+          <p><strong>Message:</strong></p>
+          <p>{{message}}</p>
+        </div>
+
+        <p>Please respond to this inquiry at your earliest convenience.</p>
+
+        <a href="https://gayatri-bearings.com" class="button"
+          >Visit Our Website</a
+        >
+      </div>
+
+      <div class="footer">
+        <p>
+          This email was sent from the contact form on Gayatri Bearing
+          Industries website.
+        </p>
+
+        <div class="social-links">
+          <a href="https://www.facebook.com/gayatri.bearings">Facebook</a>
+          <a href="https://www.linkedin.com/company/gayatri-bearings"
+            >LinkedIn</a
+          >
+          <a href="https://www.instagram.com/gayatri.bearings">Instagram</a>
+        </div>
+
+        <p>&copy; 2023 Gayatri Bearing Industries. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
