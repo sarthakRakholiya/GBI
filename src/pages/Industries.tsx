@@ -68,9 +68,10 @@ const Industries = () => {
     <div className="min-h-screen">
       <SEO
         title="Industry-Specific Bearing Solutions | GBI Precision Bearings"
-        description="Specialized ball and tapered roller bearing solutions for automotive, industrial, aerospace, railway, and other demanding applications."
-        canonicalUrl="https://www.gbiprecisionbearings.com/industries"
-        keywords="industrial bearings, automotive bearings, aerospace bearings, railway bearings, ball bearings by industry, tapered roller bearings applications"
+        description="Specialized bearing solutions for automotive, railway, aerospace, agriculture, and textile industries. High-load capacity, corrosion-resistant bearings with maintenance-free operation."
+        keywords="automotive bearings India, railway bearings Gujarat, aerospace bearings manufacturers, agriculture machinery bearings, textile industry bearings supplier, heavy equipment bearings exporter, electrical motor bearings"
+        canonicalUrl="https://www.gbibearings.in/industries"
+        ogImage="https://www.gbibearings.in/logo.png"
         structuredData={industriesStructuredData}
       />
       <Navbar />
