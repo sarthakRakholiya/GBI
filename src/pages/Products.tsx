@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
-import SEO from "@/components/SEO";
+import SEO from "@/components/ui/SEO";
 
 const productsStructuredData = {
   "@context": "https://schema.org",
@@ -725,7 +725,7 @@ const Products = () => {
         description="High-quality precision bearings, housings, and components for industrial applications. Custom solutions with superior performance and reliability."
         keywords="precision bearings India, bearing housings Gujarat, bearing components manufacturers, industrial bearings supplier, custom bearings exporter, maintenance-free bearings"
         canonicalUrl="https://www.gbibearings.in/products"
-        ogImage="https://www.gbibearings.in/logo.png"
+        ogImage="/seo-image.png"
         structuredData={productsStructuredData}
       />
     </div>

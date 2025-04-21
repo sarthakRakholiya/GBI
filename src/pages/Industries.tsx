@@ -71,7 +71,7 @@ const Industries = () => {
         description="Specialized bearing solutions for automotive, railway, aerospace, agriculture, and textile industries. High-load capacity, corrosion-resistant bearings with maintenance-free operation."
         keywords="automotive bearings India, railway bearings Gujarat, aerospace bearings manufacturers, agriculture machinery bearings, textile industry bearings supplier, heavy equipment bearings exporter, electrical motor bearings"
         canonicalUrl="https://www.gbibearings.in/industries"
-        ogImage="https://www.gbibearings.in/logo.png"
+        ogImage="/seo-image.png"
         structuredData={industriesStructuredData}
       />
       <Navbar />

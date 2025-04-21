@@ -17,7 +17,7 @@ const SEO: React.FC<SEOProps> = ({
   description,
   canonicalUrl = "https://www.gbibearings.in",
   keywords = "ball bearings manufacturer in India, tapered roller bearings exporter, industrial bearing supplier Rajkot, precision bearing manufacturers, ISO certified bearing company Gujarat",
-  ogImage = "https://www.gbibearings.in/logo.png",
+  ogImage = "/seo-image.png",
   ogType = "website",
   twitterCard = "summary_large_image",
   structuredData,
@@ -28,7 +28,7 @@ const SEO: React.FC<SEOProps> = ({
     "@type": "Organization",
     name: "GBI Precision Bearings",
     url: "https://www.gbibearings.in",
-    logo: "https://www.gbibearings.in/logo.png",
+    logo: "/seo-image.png",
     slogan: "Precision That Drives Performance",
     contactPoint: {
       "@type": "ContactPoint",
