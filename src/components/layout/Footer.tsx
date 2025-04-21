@@ -124,8 +124,7 @@ const Footer = () => {
                 <MapPin size={20} className="mt-1 mr-3 text-gbi-500" />
                 <span className="text-gray-400">
                   Sales Office: <br />
-                  Shop No - 15, Chowkdi Patel Complex, <br />
-                  Punit Nagar, Gundala, <br />
+                  Shop No - 15, Patel Complex, Gundala Chowkdi, <br />
                   Gondal, Gujarat 360311
                 </span>
               </li>

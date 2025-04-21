@@ -247,8 +247,8 @@ const PrivacyPolicy = () => {
                         Gujarat 360311
                       </p>
                       <p className="text-gray-600 mt-2">
-                        Sales Office: Shop No - 15, Chowkdi Patel Complex, Punit
-                        Nagar, Gundala, Gondal, Gujarat 360311
+                        Sales Office: Shop No - 15, Patel Complex, Gundala
+                        Chowkdi, Gondal, Gujarat 360311
                       </p>
                     </div>
                   </div>

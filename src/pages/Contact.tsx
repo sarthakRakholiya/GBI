@@ -141,9 +141,7 @@ const Contact = () => {
                         <br />
                         <span className="font-semibold">Sales Office:</span>
                         <br />
-                        Shop No - 15, Chowkdi Patel Complex,
-                        <br />
-                        Punit Nagar, Gundala,
+                        Shop No - 15, Patel Complex, Gundala Chowkdi,
                         <br />
                         Gondal, Gujarat 360311
                       </p>
