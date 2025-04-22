@@ -255,10 +255,10 @@ const PrivacyPolicy = () => {
                   <div className="flex items-center">
                     <Mail className="text-gbi-700 mr-3" size={20} />
                     <a
-                      href="mailto:gayatri.ind25@gmail.com"
+                      href="mailto:gbibearingindustries@gmail.com"
                       className="text-gray-600 hover:text-gbi-700 transition-colors"
                     >
-                      gayatri.ind25@gmail.com
+                      gbibearingindustries@gmail.com
                     </a>
                   </div>
                   <div className="flex items-center">

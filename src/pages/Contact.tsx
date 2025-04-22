@@ -174,11 +174,11 @@ const Contact = () => {
                       <h3 className="font-semibold text-gray-900">Email Us</h3>
                       <p className="text-gray-600 mt-1">
                         <a
-                          href="mailto:gayatri.ind25@gmail.com"
+                          href="mailto:gbibearingindustries@gmail.com"
                           className="hover:text-gbi-700"
                           itemProp="email"
                         >
-                          gayatri.ind25@gmail.com
+                          gbibearingindustries@gmail.com
                         </a>
                       </p>
                       <p className="text-gray-500 text-sm">
