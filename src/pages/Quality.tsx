@@ -38,6 +38,21 @@ const testimonials = [
   "What we admire most is GBI's dedication to constant innovation and quality control.",
 ];
 
+const certifications = [
+  {
+    title: "ISO 9001:2015",
+    description: "International standard for quality management systems",
+    icon: Shield,
+    pdfLink: "/documents/ISO9001.pdf",
+  },
+  {
+    title: "GST Registration",
+    description: "Government of India tax registration",
+    icon: FileText,
+    pdfLink: "/documents/gst-reg.pdf",
+  },
+];
+
 const Quality = () => {
   // Initialize animations for scroll elements
   useEffect(() => {
@@ -283,7 +298,7 @@ const Quality = () => {
       {/* Certifications Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 animate-on-scroll">
+          <div className="text-center mb-16 animate-on-scroll">
             <h2 className="text-sm font-medium text-gbi-700 uppercase tracking-wider mb-2">
               Our Credentials
             </h2>
@@ -291,42 +306,39 @@ const Quality = () => {
               Certifications & Compliance
             </h3>
             <p className="section-subtitle max-w-2xl mx-auto">
-              GBI bearings meet or exceed international quality standards and
-              industry-specific certifications.
+              Our commitment to quality is validated by internationally
+              recognized certifications.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-on-scroll">
-            {qualityCertifications.map((cert, index) => {
-              const Icon = cert.icon;
-              return (
-                <div
-                  key={cert.id}
-                  className="bg-white p-8 rounded-lg shadow-sm border border-gray-100 card-hover"
-                  style={{
-                    animationDelay: `${index * 150}ms`,
-                  }}
-                >
-                  <div className="flex items-center mb-6">
-                    <div className="h-12 w-12 bg-gbi-50 rounded-full flex items-center justify-center">
-                      <Icon size={24} className="text-gbi-700" />
-                    </div>
-                    <h4 className="text-xl font-semibold ml-4">{cert.name}</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto animate-on-scroll">
+            {certifications.map((cert, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-start">
+                  <div className="h-12 w-12 bg-gbi-50 rounded-lg flex items-center justify-center mr-4">
+                    <cert.icon size={24} className="text-gbi-700" />
                   </div>
-                  <p className="text-gray-600 mb-6">{cert.description}</p>
-                  <a
-                    href="#"
-                    className="inline-flex items-center text-gbi-700 hover:text-gbi-800 font-medium group"
-                  >
-                    View certification details
-                    <ArrowRight
-                      size={18}
-                      className="ml-2 group-hover:translate-x-1 transition-transform"
-                    />
-                  </a>
+                  <div>
+                    <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                      {cert.title}
+                    </h4>
+                    <p className="text-gray-600 mb-4">{cert.description}</p>
+                    <a
+                      href={cert.pdfLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-gbi-700 hover:text-gbi-800 font-medium"
+                    >
+                      View Certificate Details
+                      <ArrowRight size={16} className="ml-2" />
+                    </a>
+                  </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </section>

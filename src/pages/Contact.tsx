@@ -4,7 +4,14 @@ import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import ContactForm from "@/components/ui/ContactForm";
 import SEO from "@/components/ui/SEO";
-import { MapPin, Phone, Mail, Clock, ChevronDown } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  ChevronDown,
+  FileText,
+} from "lucide-react";
 import Map from "@/components/ui/Map";
 
 const Contact = () => {
@@ -113,6 +120,17 @@ const Contact = () => {
                 </p>
 
                 <div className="space-y-6">
+                  <div className="flex items-start">
+                    <div className="h-10 w-10 bg-gbi-50 rounded-full flex items-center justify-center mt-1">
+                      <FileText size={20} className="text-gbi-700" />
+                    </div>
+                    <div className="ml-4">
+                      <h3 className="font-semibold text-gray-900">
+                        GST Number
+                      </h3>
+                      <p className="text-gray-600 mt-1">24AIXPR7688C1ZG</p>
+                    </div>
+                  </div>
                   <div className="flex items-start">
                     <div className="h-10 w-10 bg-gbi-50 rounded-full flex items-center justify-center mt-1">
                       <MapPin size={20} className="text-gbi-700" />

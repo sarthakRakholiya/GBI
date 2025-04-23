@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, FileText } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
@@ -209,6 +209,13 @@ const TermsOfService = () => {
                         Sales Office: Shop No - 15, Patel Complex, Gundala
                         Chowkdi, Gondal, Gujarat 360311
                       </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <FileText className="text-gbi-700 mt-1 mr-3" size={20} />
+                    <div>
+                      <p className="font-semibold text-gray-900">GST Number</p>
+                      <p className="text-gray-600">24AIXPR7688C1ZG</p>
                     </div>
                   </div>
                   <div className="flex items-center">

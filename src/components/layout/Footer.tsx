@@ -12,6 +12,7 @@ import {
   Smartphone,
   Home,
   ExternalLink,
+  FileText,
 } from "lucide-react";
 
 const Footer = () => {
@@ -146,6 +147,10 @@ const Footer = () => {
                   gbibearingindustries@gmail.com
                 </a>
               </li>
+              <li className="flex items-start">
+                <FileText size={20} className="mr-3 text-gbi-500" />
+                <span className="text-gray-400">GST No. - 24AIXPR7688C1ZG</span>
+              </li>
             </ul>
           </div>
 
@@ -180,6 +185,7 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Gayatri Bearing Industries (GBI).
             All rights reserved.
           </p>
+
           <div className="flex space-x-4 mt-4 md:mt-0">
             <Link
               to="/privacy-policy"
