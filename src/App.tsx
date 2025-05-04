@@ -37,7 +37,8 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => {
+// Analytics component to handle tracking
+const Analytics = () => {
   const location = useLocation();
 
   useEffect(() => {
@@ -53,6 +54,10 @@ const App = () => {
     trackPageView(location.pathname);
   }, [location]);
 
+  return null;
+};
+
+const App = () => {
   // Initialize animation detection for scroll elements
   useEffect(() => {
     let ticking = false;
@@ -96,6 +101,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
+          <Analytics />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
