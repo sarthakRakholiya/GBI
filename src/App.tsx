@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
+import { initGA, trackPageView, trackUniqueVisitor } from "@/lib/analytics";
 
 // Scroll to top component that will execute on route changes
 const ScrollToTop = () => {
@@ -37,6 +38,21 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Initialize GA
+    initGA();
+
+    // Track unique visitor
+    trackUniqueVisitor();
+  }, []);
+
+  useEffect(() => {
+    // Track page views
+    trackPageView(location.pathname);
+  }, [location]);
+
   // Initialize animation detection for scroll elements
   useEffect(() => {
     let ticking = false;
