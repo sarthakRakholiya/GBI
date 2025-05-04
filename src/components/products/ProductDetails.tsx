@@ -150,10 +150,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
                   </span>
                 </div>
 
-                <div className="divider my-6"></div>
+                {/* <div className="divider my-6"></div> */}
 
                 {/* Custom Solutions Section */}
-                <div className="bg-gbi-50 rounded-lg p-4 mb-6">
+                {/* <div className="bg-gbi-50 rounded-lg p-4 mb-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     Need Custom Bearing Solutions?
                   </h3>
@@ -161,7 +161,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
                     Can't find exactly what you need? We specialize in custom
                     bearing solutions tailored to your specific requirements.
                   </p>
-                </div>
+                </div> */}
 
                 <button className="btn-primary w-full py-2.5">
                   Request Quote
