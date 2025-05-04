@@ -162,6 +162,63 @@ const Hero = () => {
             </Link>
           </div>
 
+          {/* Discount Details */}
+          <div
+            className="flex items-center mt-8 mb-8 bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20 animate-fade-in"
+            style={{ animationDelay: "0.5s" }}
+          >
+            <div className="bg-gbi-700 h-12 w-12 rounded-full flex items-center justify-center shadow-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-white"
+              >
+                <path d="M5.7 21a2 2 0 0 1-2-1.7L2 13.6a2 2 0 0 1 .5-1.6L10 4.5a2 2 0 0 1 2.8 0l7.5 7.5a2 2 0 0 1 .5 1.6l-1.7 5.7a2 2 0 0 1-2 1.7Z" />
+                <path d="m9 12 3 3" />
+                <path d="M14 12h.01" />
+                <path d="M9 12h.01" />
+              </svg>
+            </div>
+            <div className="ml-4 flex-grow">
+              <h3 className="text-white font-semibold text-lg">
+                Special Offer
+              </h3>
+              <p className="text-white/90">
+                Get <span className="text-gbi-500 font-bold">60% OFF</span> on
+                all bearings. Limited time offer! <br /> Bulk order discounts
+                available on request
+              </p>
+            </div>
+            <Link
+              to="/contact"
+              className="inline-flex items-center text-sm text-white bg-gbi-700/80 hover:bg-gbi-700 transition-colors px-4 py-2 rounded-md whitespace-nowrap ml-4"
+            >
+              Contact Us
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="ml-2"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+
           <div
             className="flex items-center mt-12 space-x-4 animate-fade-in"
             style={{ animationDelay: "0.6s" }}

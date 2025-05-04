@@ -1,14 +1,38 @@
-
 # All search engines
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://www.gbiprecisionbearings.com/sitemap.xml
+# Sitemaps
+Sitemap: https://www.gbibearings.in/sitemap.xml
 
-# Disallow specific folders
+# Important pages
+Allow: /products
+Allow: /about
+Allow: /contact
+Allow: /industries
+Allow: /quality-standards
+Allow: /warranty
+
+# Product Categories
+Allow: /products/ball-bearings
+Allow: /products/tapered-bearings
+
+# Industry Pages
+Allow: /industries/automotive
+Allow: /industries/industrial
+Allow: /industries/agriculture
+Allow: /industries/construction
+
+# Prevent crawling of search results
+Disallow: /search
+Disallow: /*?q=*
+
+# Prevent crawling of admin areas
 Disallow: /admin/
-Disallow: /private/
+Disallow: /dashboard/
+
+# Rate limiting
+Crawl-delay: 10
 
 # Specific search engine directives
 User-agent: Googlebot

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "@/components/sections/Hero";
 import AboutPreview from "@/components/sections/AboutPreview";
 // import ProductsPreview from "@/components/sections/ProductsPreview";
@@ -9,6 +9,7 @@ import Navbar from "@/components/layout/Navbar";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import SEO from "@/components/ui/SEO";
 import { faqItems } from "@/lib/data";
+import { useQuery } from "@tanstack/react-query";
 import {
   ArrowRight,
   PackageCheck,
@@ -17,12 +18,78 @@ import {
   BadgeCheck,
   Volume2,
   ShieldCheck,
+  X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Loader from "@/components/ui/Loader";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog";
+import ProductCard from "@/components/products/ProductCard";
+import ProductDetails from "@/components/products/ProductDetails";
+import { PricingData, GoogleSheetsResponse } from "@/types/products";
+
+const SHEET_ID = "1bAXpj1WQLRenAJ4RwpOQezonzkkxDKY-nWyfauapqcs";
+const API_KEY = "AIzaSyCzj1F8qUro1kmCvfKqhOSeKCtgZNHZstc";
+const RANGE = "Sheet1!A2:Z";
+
+const fetchPricingData = async (): Promise<PricingData[]> => {
+  const response = await fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data: GoogleSheetsResponse = await response.json();
+  if (!data.values || !Array.isArray(data.values)) {
+    throw new Error("Invalid data format from Google Sheets");
+  }
+
+  const pricingData = data.values.map((row: string[]) => {
+    const item: PricingData = {
+      modelNumber: row[0] || "",
+      type: row[1] || "",
+      boreDiameter: row[2] || "",
+      outsideDiameter: row[3] || "",
+      totalWidth: row[4] || "",
+      mrp: parseFloat(row[5]) || 0,
+      inStock: row[6]?.trim()?.toLowerCase() === "in stock",
+      application: row[7] || "",
+      industriesType: row[8]?.trim()?.split(",") || "",
+      showInMainPage: row[9]?.trim()?.toLowerCase() === "true",
+      showInProductPage: row[10]?.trim()?.toLowerCase() === "true",
+    };
+    return item;
+  });
+
+  return pricingData.filter((item) => item.showInMainPage);
+};
+
+const getProductImage = (type: string, isDetails: boolean = false): string => {
+  if (type.toLowerCase().includes("ball")) {
+    return isDetails
+      ? "/product/ball-bearing-details.png"
+      : "/product/ball-card.png";
+  } else if (type.toLowerCase().includes("tapered")) {
+    return isDetails
+      ? "/product/tapper-bearing-details.png"
+      : "/product/tapper-card.png";
+  }
+  return "/placeholder.svg";
+};
 
 const Index = () => {
+  const [activeProduct, setActiveProduct] = useState<PricingData | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   // Initialize animations for scroll elements
   useEffect(() => {
     let ticking = false;
@@ -58,6 +125,17 @@ const Index = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["mainPageProducts"],
+    queryFn: fetchPricingData,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+  });
 
   const structuredData = {
     "@type": "WebPage",
@@ -95,6 +173,75 @@ const Index = () => {
       <Navbar />
       <Hero />
       <AboutPreview />
+
+      {/* Featured Products Section */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 animate-on-scroll">
+            <h2 className="text-sm font-medium text-gbi-700 uppercase tracking-wider mb-2">
+              Featured Products
+            </h2>
+            <h3 className="section-title text-center">
+              Our Most Popular Bearings
+            </h3>
+            <p className="section-subtitle max-w-2xl mx-auto">
+              Discover our selection of high-performance bearings designed for
+              reliability and precision
+            </p>
+          </div>
+
+          {isLoading ? (
+            <div className="min-h-[400px]">
+              <Loader variant="container" />
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">
+                Failed to load products. Please try again later.
+              </p>
+            </div>
+          ) : products && products.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {products.map((product, index) => (
+                <ProductCard
+                  key={product.modelNumber}
+                  product={product}
+                  onClick={(product) => {
+                    setActiveProduct(product);
+                    setIsDialogOpen(true);
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-600">
+                No products available at the moment.
+              </p>
+            </div>
+          )}
+
+          <div className="text-center mt-12">
+            <Link
+              to="/products"
+              className="inline-flex items-center px-6 py-3 bg-gbi-700 text-white rounded-md hover:bg-gbi-800 transition-colors font-medium group"
+            >
+              View All Products
+              <ArrowRight
+                size={18}
+                className="ml-2 group-hover:translate-x-1 transition-transform"
+              />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Details Dialog */}
+      <ProductDetails
+        product={activeProduct}
+        isOpen={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+      />
 
       {/* Bearing Types Overview Section */}
       <section

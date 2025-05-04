@@ -16,6 +16,23 @@ import {
 } from "lucide-react";
 
 const Footer = () => {
+  const footerNavigation = {
+    company: [
+      { name: "About", href: "/about" },
+      { name: "Products", href: "/products" },
+      { name: "Industries", href: "/industries" },
+      { name: "Quality", href: "/quality" },
+      { name: "Process", href: "/process" },
+      { name: "Pricing", href: "/pricing" },
+      { name: "Contact", href: "/contact" },
+    ],
+    legal: [
+      { name: "Privacy Policy", href: "/privacy-policy" },
+      { name: "Terms of Service", href: "/terms-of-service" },
+      { name: "Cookie Policy", href: "/cookie-policy" },
+    ],
+  };
+
   return (
     <footer className="bg-gray-900 text-gray-200 pt-16 pb-8">
       <div className="container mx-auto px-4">
@@ -81,19 +98,10 @@ const Footer = () => {
               Quick Links
             </h3>
             <ul className="space-y-2">
-              {[
-                { name: "Home", path: "/" },
-                { name: "About Us", path: "/about" },
-                /* Products link commented out
-                { name: "Products", path: "/products" },
-                */
-                { name: "Industries", path: "/industries" },
-                { name: "Quality", path: "/quality" },
-                { name: "Contact", path: "/contact" },
-              ].map((link) => (
-                <li key={link.path}>
+              {footerNavigation.company.map((link) => (
+                <li key={link.href}>
                   <Link
-                    to={link.path}
+                    to={link.href}
                     className="text-gray-400 hover:text-white transition-colors inline-flex items-center group"
                   >
                     <ChevronRight
@@ -187,24 +195,15 @@ const Footer = () => {
           </p>
 
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link
-              to="/privacy-policy"
-              className="text-gray-500 hover:text-gray-300 text-sm"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to="/terms-of-service"
-              className="text-gray-500 hover:text-gray-300 text-sm"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              to="/cookie-policy"
-              className="text-gray-500 hover:text-gray-300 text-sm"
-            >
-              Cookie Policy
-            </Link>
+            {footerNavigation.legal.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="text-gray-500 hover:text-gray-300 text-sm"
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

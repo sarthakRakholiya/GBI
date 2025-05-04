@@ -1,6 +1,15 @@
-const Loader = () => {
+interface LoaderProps {
+  variant?: "fullscreen" | "container";
+}
+
+const Loader = ({ variant = "fullscreen" }: LoaderProps) => {
+  const containerClasses =
+    variant === "fullscreen"
+      ? "fixed inset-0 bg-white z-50"
+      : "w-full min-h-[400px] bg-white";
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+    <div className={`${containerClasses} flex items-center justify-center`}>
       <div className="flex flex-col items-center gap-4">
         {/* Logo */}
         <div className="h-12 w-fit bg-gbi-700 rounded-md flex items-center justify-center border border-gray-300 px-3">

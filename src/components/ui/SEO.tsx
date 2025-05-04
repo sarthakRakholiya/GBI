@@ -2,88 +2,120 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 
 interface SEOProps {
-  title: string;
-  description: string;
-  canonicalUrl?: string;
+  title?: string;
+  description?: string;
   keywords?: string;
+  canonicalUrl?: string;
   ogImage?: string;
-  ogType?: string;
-  twitterCard?: string;
-  structuredData?: Record<string, unknown>;
+  structuredData?: any;
 }
 
-const SEO: React.FC<SEOProps> = ({
-  title,
-  description,
+const SEO = ({
+  title = "GBI Precision Bearings | Leading Bearing Manufacturer in India",
+  description = "India's premier manufacturer of precision ball bearings, tapered roller bearings & industrial components. High-quality bearings with ISO certification, bulk discounts & pan-India delivery.",
+  keywords = "ball bearings, tapered roller bearings, precision bearings, industrial bearings, bearing manufacturer India, GBI bearings, bearing supplier Gujarat, bulk bearings order, bearing price India, bearing distributor, automotive bearings, industrial machinery bearings, bearing components, ISO certified bearings, bearing wholesale",
   canonicalUrl = "https://www.gbibearings.in",
-  keywords = "ball bearings manufacturer in India, tapered roller bearings exporter, industrial bearing supplier Rajkot, precision bearing manufacturers, ISO certified bearing company Gujarat",
   ogImage = "/seo-image.png",
-  ogType = "website",
-  twitterCard = "summary_large_image",
   structuredData,
-}) => {
-  // Generate structured data for the page
-  const baseStructuredData = {
-    "@context": "https://schema.org",
+}: SEOProps) => {
+  const defaultStructuredData = {
+    "@context": "https://schema.org/",
     "@type": "Organization",
     name: "GBI Precision Bearings",
     url: "https://www.gbibearings.in",
-    logo: "/seo-image.png",
-    slogan: "Precision That Drives Performance",
+    logo: "https://www.gbibearings.in/logo.png",
+    description: description,
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "India",
+      addressRegion: "Gujarat",
+    },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+91 98799 30867",
-      contactType: "Customer Service",
-      areaServed: "India",
-      availableLanguage: ["English", "Gujarati", "Hindi"],
+      telephone: "+91-XXXXXXXXXX",
+      contactType: "sales",
+      availableLanguage: ["English", "Hindi", "Gujarati"],
     },
     sameAs: [
-      "https://www.facebook.com/GayatriBearingIndustries",
-      "https://www.linkedin.com/company/gayatri-bearing-industries",
-      "https://twitter.com/GBIBearings",
+      "https://www.facebook.com/gbibearings",
+      "https://www.linkedin.com/company/gbi-bearings",
     ],
   };
 
-  const pageStructuredData = structuredData
-    ? { ...baseStructuredData, ...structuredData }
-    : baseStructuredData;
-
-  const structuredDataJSON = JSON.stringify(pageStructuredData);
+  const productStructuredData = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: "GBI Precision Bearings Collection",
+    description:
+      "High-quality precision bearings for industrial applications including ball bearings and tapered roller bearings",
+    brand: {
+      "@type": "Brand",
+      name: "GBI Bearings",
+    },
+    manufacturer: {
+      "@type": "Organization",
+      name: "GBI Precision Bearings",
+    },
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      highPrice: "50000",
+      lowPrice: "500",
+      offerCount: "100+",
+      seller: {
+        "@type": "Organization",
+        name: "GBI Precision Bearings",
+      },
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "150",
+    },
+  };
 
   return (
     <Helmet>
-      {/* Basic meta tags */}
+      {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
+
+      {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
 
-      {/* OpenGraph tags */}
-      <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:type" content={ogType} />
+      {/* Open Graph Meta Tags */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:site_name" content="GBI Precision Bearings" />
-      <meta property="og:locale" content="en_IN" />
 
-      {/* Twitter tags */}
-      <meta name="twitter:card" content={twitterCard} />
+      {/* Twitter Card Meta Tags */}
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
-      <meta name="twitter:site" content="@GBIBearings" />
 
-      {/* Additional SEO tags */}
-      <meta name="geo.region" content="IN-GJ" />
-      <meta name="geo.placename" content="Rajkot, Gondal" />
-      <meta name="geo.position" content="22.2734719;70.8032714" />
-      <meta name="ICBM" content="22.2734719, 70.8032714" />
-      <meta name="author" content="GBI Precision Bearings" />
+      {/* Additional SEO Meta Tags */}
       <meta name="robots" content="index, follow" />
+      <meta name="googlebot" content="index, follow" />
+      <meta name="language" content="English" />
+      <meta name="revisit-after" content="7 days" />
+      <meta name="distribution" content="global" />
+      <meta name="rating" content="general" />
 
-      {/* Structured data */}
-      <script type="application/ld+json">{structuredDataJSON}</script>
+      {/* Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify(structuredData || defaultStructuredData)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(productStructuredData)}
+      </script>
+
+      {/* Favicon */}
+      <link rel="icon" href="/favicon.ico" />
     </Helmet>
   );
 };

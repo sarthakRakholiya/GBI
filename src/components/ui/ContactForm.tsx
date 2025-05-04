@@ -40,7 +40,6 @@ const ContactForm = () => {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
     setIsSubmitting(true);
     setSubmitStatus(null);
 
@@ -60,8 +59,6 @@ const ContactForm = () => {
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
-      console.log("Email sent successfully:", result);
-
       setSubmitStatus({
         success: true,
         message: "Thank you for your message! We'll get back to you soon.",
@@ -70,7 +67,6 @@ const ContactForm = () => {
       // Reset form after successful submission
       reset();
     } catch (error) {
-      console.error("Error sending email:", error);
       setSubmitStatus({
         success: false,
         message:
