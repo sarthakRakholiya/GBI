@@ -39,10 +39,10 @@ const Navbar = () => {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Products", href: "/products" },
+    { name: "Catalog", href: "/catalog" },
     { name: "Industries", href: "/industries" },
     { name: "Quality", href: "/quality" },
     { name: "Process", href: "/process" },
-    { name: "Pricing", href: "/pricing" },
     { name: "Contact", href: "/contact" },
   ];
   return (

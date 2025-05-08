@@ -23,7 +23,7 @@ const Footer = () => {
       { name: "Industries", href: "/industries" },
       { name: "Quality", href: "/quality" },
       { name: "Process", href: "/process" },
-      { name: "Pricing", href: "/pricing" },
+      { name: "Catalog", href: "/catalog" },
       { name: "Contact", href: "/contact" },
     ],
     legal: [

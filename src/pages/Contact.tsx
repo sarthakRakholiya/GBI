@@ -112,7 +112,9 @@ const Contact = () => {
             {/* Contact Information */}
             <div className="lg:col-span-1 animate-on-scroll">
               <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 p-8">
-                <h2 className="text-2xl font-bold mb-6">Get In Touch</h2>
+                <h2 className="text-xl md:text-2xl font-bold mb-6">
+                  Get In Touch
+                </h2>
                 <p className="text-gray-600 mb-8">
                   Have questions about our products or services? Our team is
                   here to help you find the perfect bearing solution for your
@@ -125,7 +127,7 @@ const Contact = () => {
                       <FileText size={20} className="text-gbi-700" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900">
                         GST Number
                       </h3>
                       <p className="text-gray-600 mt-1">24AIXPR7688C1ZG</p>
@@ -136,7 +138,9 @@ const Contact = () => {
                       <MapPin size={20} className="text-gbi-700" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="font-semibold text-gray-900">Visit Us</h3>
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900">
+                        Visit Us
+                      </h3>
                       <p
                         className="text-gray-600 mt-1"
                         itemProp="address"
@@ -171,7 +175,9 @@ const Contact = () => {
                       <Phone size={20} className="text-gbi-700" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="font-semibold text-gray-900">Call Us</h3>
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900">
+                        Call Us
+                      </h3>
                       <p className="text-gray-600 mt-1">
                         <a
                           href="tel:+919879930867"
@@ -189,7 +195,9 @@ const Contact = () => {
                       <Mail size={20} className="text-gbi-700" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="font-semibold text-gray-900">Email Us</h3>
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900">
+                        Email Us
+                      </h3>
                       <p className="text-gray-600 mt-1">
                         <a
                           href="mailto:gbibearingindustries@gmail.com"
@@ -210,7 +218,7 @@ const Contact = () => {
                       <Clock size={20} className="text-gbi-700" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900">
                         Hours of Operation
                       </h3>
                       <div className="text-gray-600 mt-1 space-y-1">

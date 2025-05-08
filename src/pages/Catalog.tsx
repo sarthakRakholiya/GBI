@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Loader from "@/components/ui/Loader";
 
-interface PricingData {
+interface CatalogData {
   modelNumber: string;
   type: string;
   boreDiameter: string;
@@ -32,7 +32,7 @@ const SHEET_ID = "1bAXpj1WQLRenAJ4RwpOQezonzkkxDKY-nWyfauapqcs";
 const API_KEY = "AIzaSyCzj1F8qUro1kmCvfKqhOSeKCtgZNHZstc";
 const RANGE = "Sheet1!A2:Z";
 
-const validatePricingData = (data: PricingData): boolean => {
+const validateCatalogData = (data: CatalogData): boolean => {
   return (
     typeof data.modelNumber === "string" &&
     typeof data.type === "string" &&
@@ -48,7 +48,7 @@ const validatePricingData = (data: PricingData): boolean => {
   );
 };
 
-const fetchPricingData = async (): Promise<PricingData[]> => {
+const fetchCatalogData = async (): Promise<CatalogData[]> => {
   try {
     const response = await fetch(
       `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
@@ -64,8 +64,8 @@ const fetchPricingData = async (): Promise<PricingData[]> => {
       throw new Error("Invalid data format from Google Sheets");
     }
 
-    const pricingData = data.values.map((row: string[]) => {
-      const item: PricingData = {
+    const catalogData = data.values.map((row: string[]) => {
+      const item: CatalogData = {
         modelNumber: row[0] || "",
         type: row[1] || "",
         boreDiameter: row[2] || "",
@@ -79,7 +79,7 @@ const fetchPricingData = async (): Promise<PricingData[]> => {
         showInProductPage: row[10]?.trim()?.toLowerCase() === "yes",
       };
 
-      if (!validatePricingData(item)) {
+      if (!validateCatalogData(item)) {
         console.warn("Invalid data format for row:", row);
         return null;
       }
@@ -87,23 +87,23 @@ const fetchPricingData = async (): Promise<PricingData[]> => {
       return item;
     });
 
-    return pricingData.filter((item): item is PricingData => item !== null);
+    return catalogData.filter((item): item is CatalogData => item !== null);
   } catch (error) {
-    console.error("Error fetching pricing data:", error);
+    console.error("Error fetching catalog data:", error);
     throw error;
   }
 };
 
-const PricingTable = () => {
+const CatalogTable = () => {
   const {
-    data: pricingData,
+    data: catalogData,
     isLoading,
     error,
     isError,
     isFetching,
   } = useQuery({
-    queryKey: ["pricing"],
-    queryFn: fetchPricingData,
+    queryKey: ["catalog"],
+    queryFn: fetchCatalogData,
     staleTime: 5 * 60 * 1000, // Data stays fresh for 5 minutes
     gcTime: 30 * 60 * 1000, // Keep data in garbage collection for 30 minutes
     refetchOnWindowFocus: false, // Don't refetch when window regains focus
@@ -123,8 +123,8 @@ const PricingTable = () => {
     direction: "asc" | "desc";
   }>({ key: "modelNumber", direction: "asc" });
 
-  const categories = pricingData
-    ? ["all", ...new Set(pricingData.map((item) => item.type || ""))]
+  const categories = catalogData
+    ? ["all", ...new Set(catalogData.map((item) => item.type || ""))]
     : ["all"];
 
   const handleDimensionChange = (
@@ -154,7 +154,7 @@ const PricingTable = () => {
     });
   };
 
-  const filteredData = pricingData
+  const filteredData = catalogData
     ?.filter((item) => {
       if (!item) return false;
 
@@ -209,7 +209,7 @@ const PricingTable = () => {
         <div className="flex flex-col items-center justify-center space-y-4">
           <PackageX size={64} className="text-gray-400" />
           <p className="text-xl font-medium text-gray-600">
-            Failed to load pricing data
+            Failed to load catalog data
           </p>
           <p className="text-gray-500">
             {error instanceof Error
@@ -843,31 +843,32 @@ const PricingTable = () => {
   );
 };
 
-const Pricing = () => {
+const Catalog = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
 
-      {/* Hero Section */}
+      {/* Hero Section
       <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Our <span className="text-gradient">Pricing</span>
+              Our <span className="text-gradient">Catalog</span>
             </h1>
             <p className="text-xl text-gray-600 mb-6">
-              Competitive pricing for high-quality bearings and components.
+              Browse our comprehensive collection of high-quality bearings and
+              components.
             </p>
             <div className="h-1 w-20 bg-gbi-700 rounded"></div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* Pricing Table Section */}
+      {/* Catalog Table Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <ErrorBoundary>
-            <PricingTable />
+            <CatalogTable />
           </ErrorBoundary>
         </div>
       </section>
@@ -899,4 +900,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default Catalog;

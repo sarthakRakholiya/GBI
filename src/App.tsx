@@ -15,7 +15,7 @@ import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
-import Pricing from "./pages/Pricing";
+import Catalog from "@/pages/Catalog";
 import { initGA, trackPageView, trackUniqueVisitor } from "@/lib/analytics";
 
 // Scroll to top component that will execute on route changes
@@ -103,20 +103,22 @@ const App = () => {
         <BrowserRouter>
           <ScrollToTop />
           <Analytics />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/industries" element={<Industries />} />
-            <Route path="/quality" element={<Quality />} />
-            <Route path="/process" element={<Process />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/cookie-policy" element={<CookiePolicy />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div className="overflow-x-hidden w-full">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/catalog" element={<Catalog />} />
+              <Route path="/industries" element={<Industries />} />
+              <Route path="/quality" element={<Quality />} />
+              <Route path="/process" element={<Process />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

@@ -56,13 +56,23 @@ const Hero = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleScrollDown = () => {
+    if (heroRef.current) {
+      const heroHeight = heroRef.current.offsetHeight;
+      window.scrollTo({
+        top: heroHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div
       ref={heroRef}
-      className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-r from-gray-900 via-gray-800 to-black"
+      className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-r from-gray-900 via-gray-800 to-black w-full"
     >
       {/* Background Image Carousel */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 w-full">
         <Carousel
           setApi={setApi}
           opts={{
@@ -115,7 +125,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-20 hero-content">
         <div className="max-w-3xl">
           <h1
-            className="text-4xl md:text-6xl lg:text-7xl font-title font-bold text-white mb-4 animate-fade-in"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-title font-bold text-white mb-3 sm:mb-4 animate-fade-in"
             style={{ textShadow: "0 4px 8px rgba(0,0,0,0.3)" }}
           >
             <span className="text-gradient bg-gradient-to-r from-gbi-500 to-gbi-700">
@@ -125,7 +135,7 @@ const Hero = () => {
           </h1>
 
           <h2
-            className="text-xl md:text-2xl lg:text-3xl text-white/90 font-light mb-8 animate-fade-in"
+            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 font-light mb-6 sm:mb-8 animate-fade-in"
             style={{ animationDelay: "0.2s" }}
           >
             Leading manufacturer of precision bearings in Gujarat, delivering
@@ -134,7 +144,7 @@ const Hero = () => {
           </h2>
 
           <div
-            className="flex flex-col sm:flex-row gap-4 animate-fade-in"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-in"
             style={{ animationDelay: "0.4s" }}
           >
             {/* Explore Bearings button commented out
@@ -152,11 +162,11 @@ const Hero = () => {
 
             <Link
               to="/contact"
-              className="btn-secondary py-3 px-6 text-base flex items-center"
+              className="btn-secondary py-2.5 sm:py-3 px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center"
             >
               Get a Quote
               <ArrowRight
-                size={20}
+                size={18}
                 className="ml-2 transition-transform group-hover:translate-x-1"
               />
             </Link>
@@ -164,14 +174,14 @@ const Hero = () => {
 
           {/* Discount Details */}
           <div
-            className="flex items-center mt-8 mb-8 bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/20 animate-fade-in"
+            className="flex items-center mt-4 sm:mt-6 mb-4 sm:mb-6 bg-white/10 backdrop-blur-md rounded-lg p-2.5 sm:p-3 border border-white/20 animate-fade-in"
             style={{ animationDelay: "0.5s" }}
           >
-            <div className="bg-gbi-700 h-12 w-12 rounded-full flex items-center justify-center shadow-lg">
+            <div className="bg-gbi-700 h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center shadow-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -186,49 +196,27 @@ const Hero = () => {
                 <path d="M9 12h.01" />
               </svg>
             </div>
-            <div className="ml-4 flex-grow">
-              <h3 className="text-white font-semibold text-lg">
+            <div className="ml-2 sm:ml-3 flex-grow">
+              <h3 className="text-white font-semibold text-sm sm:text-base">
                 Special Offer
               </h3>
-              <p className="text-white/90">
+              <p className="text-white/90 text-xs sm:text-sm">
                 Get <span className="text-gbi-500 font-bold">60% OFF</span> on
-                all bearings. Limited time offer! <br /> Bulk order discounts
-                available on request
+                all bearings. Limited time offer!
               </p>
             </div>
-            <Link
-              to="/contact"
-              className="inline-flex items-center text-sm text-white bg-gbi-700/80 hover:bg-gbi-700 transition-colors px-4 py-2 rounded-md whitespace-nowrap ml-4"
-            >
-              Contact Us
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="ml-2"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </Link>
           </div>
 
           <div
-            className="flex items-center mt-12 space-x-4 animate-fade-in"
+            className="flex flex-col sm:flex-row items-start sm:items-center mt-4 sm:mt-6 space-y-2 sm:space-y-0 sm:space-x-3 animate-fade-in"
             style={{ animationDelay: "0.6s" }}
           >
-            <div className="flex items-center bg-white/10 backdrop-blur-md rounded-md px-4 py-3">
-              <div className="bg-gbi-700 h-8 w-8 rounded-full flex items-center justify-center shadow-lg">
+            <div className="flex items-center bg-white/10 backdrop-blur-md rounded-md px-2.5 sm:px-3 py-2 sm:py-2.5 w-full sm:w-auto">
+              <div className="bg-gbi-700 h-6 w-6 sm:h-7 sm:w-7 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
+                  width="12"
+                  height="12"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -241,20 +229,22 @@ const Hero = () => {
                   <path d="M12 4C5.6 9.4 3.8 12.6 3.9 18.4 5 19.5 7 19.5 8.2 19.5 10.3 19.5 12.6 18.5 13.3 17"></path>
                 </svg>
               </div>
-              <div className="ml-3">
-                <p className="text-white/90 text-xs font-medium">
+              <div className="ml-2">
+                <p className="text-white/90 text-[10px] sm:text-xs font-medium">
                   INDUSTRY STANDARD
                 </p>
-                <p className="text-white text-sm">ISO 9001 Certified</p>
+                <p className="text-white text-[10px] sm:text-xs">
+                  ISO 9001 Certified
+                </p>
               </div>
             </div>
 
-            <div className="flex items-center bg-white/10 backdrop-blur-md rounded-md px-4 py-3">
-              <div className="bg-gbi-700 h-8 w-8 rounded-full flex items-center justify-center shadow-lg">
+            <div className="flex items-center bg-white/10 backdrop-blur-md rounded-md px-2.5 sm:px-3 py-2 sm:py-2.5 w-full sm:w-auto">
+              <div className="bg-gbi-700 h-6 w-6 sm:h-7 sm:w-7 rounded-full flex items-center justify-center shadow-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
+                  width="12"
+                  height="12"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -267,11 +257,13 @@ const Hero = () => {
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
               </div>
-              <div className="ml-3">
-                <p className="text-white/90 text-xs font-medium">
+              <div className="ml-2">
+                <p className="text-white/90 text-[10px] sm:text-xs font-medium">
                   PRECISION ENGINEERED
                 </p>
-                <p className="text-white text-sm">Tolerance to 0.001mm</p>
+                <p className="text-white text-[10px] sm:text-xs">
+                  Tolerance to 0.001mm
+                </p>
               </div>
             </div>
           </div>
@@ -279,11 +271,14 @@ const Hero = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce z-20">
-        <span className="text-white/80 text-sm font-medium mb-2">
+      <div
+        className="fixed bottom-6 left-0 right-0 flex flex-col items-center justify-center animate-bounce z-20 cursor-pointer"
+        onClick={handleScrollDown}
+      >
+        <span className="text-white/80 text-xs sm:text-sm font-medium mb-1 sm:mb-2">
           Scroll Down
         </span>
-        <ChevronRight size={24} className="text-white/80 transform rotate-90" />
+        <ChevronRight size={20} className="text-white/80 transform rotate-90" />
       </div>
     </div>
   );
