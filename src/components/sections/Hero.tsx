@@ -308,21 +308,25 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator with parallax - hidden on small screens */}
+      {/* Scroll indicator with parallax - only visible in hero */}
       <motion.div
-        className="hidden sm:flex fixed bottom-8 left-0 right-0 flex-col items-center justify-center z-20 cursor-pointer"
+        className="flex absolute bottom-8 left-0 right-0 flex-col items-center justify-center z-20 cursor-pointer"
         onClick={handleScrollDown}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
-        style={{ y: y2 }}
+        style={{
+          y: y2,
+          opacity: useTransform(scrollY, [0, 500], [1, 0]),
+          display: useTransform(scrollY, [0, 500], ["flex", "none"]),
+        }}
       >
-        <span className="text-white/80 text-sm font-medium mb-2">
+        <span className="text-white/80 text-xs sm:text-sm font-medium mb-2">
           Scroll Down
         </span>
-        <div className="w-6 h-10 border-2 border-white/80 rounded-full flex justify-center">
+        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/80 rounded-full flex justify-center">
           <motion.div
-            className="w-1.5 h-1.5 bg-white/80 rounded-full mt-2"
+            className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-white/80 rounded-full mt-1.5 sm:mt-2"
             animate={{
               y: [0, 12, 0],
             }}
