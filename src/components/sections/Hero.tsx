@@ -1,24 +1,38 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight, ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
+import CustomCursor from "@/components/ui/CustomCursor";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useDragControls,
+} from "framer-motion";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import type { CarouselApi } from "@/components/ui/carousel";
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [api, setApi] = useState<CarouselApi>();
+  const { scrollY } = useScroll();
+  const [isExpanded, setIsExpanded] = useState(false);
+  const dragControls = useDragControls();
 
-  // Array of hero background images - updated with bearing-related images
+  // Parallax values
+  const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -200]);
+  const y3 = useTransform(scrollY, [0, 1000], [0, 100]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+
+  // Array of hero background images
   const heroImages = [
     "https://jvnbearings.com/wp-content/uploads/2023/05/BALL-BEARING-MANUFACTURING-PROCESS_result.webp",
-    "https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=2000&auto=format&fit=crop&fm=webp&w=1920&h=1080", // Machinery with bearings
-    "https://images.unsplash.com/photo-1581091215367-9b6c00b3035a?q=80&w=2000&auto=format&fit=crop&fm=webp&w=1920&h=1080", // Industrial manufacturing
+    "https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=2000&auto=format&fit=crop&fm=webp&w=1920&h=1080",
+    "https://images.unsplash.com/photo-1581091215367-9b6c00b3035a?q=80&w=2000&auto=format&fit=crop&fm=webp&w=1920&h=1080",
     "https://baartgroup.com/wp-content/uploads/Tapered-Bearings-On-Shaft-scaled.jpeg",
     "https://i.ytimg.com/vi/FL1UHMXAhKc/maxresdefault.jpg",
   ];
@@ -29,19 +43,15 @@ const Hero = () => {
     // Set up autoplay interval
     const autoplayInterval = setInterval(() => {
       api.scrollNext();
-    }, 3000);
+    }, 5000); // Increased to 5 seconds for better viewing
 
-    // Clean up interval on component unmount
     return () => clearInterval(autoplayInterval);
   }, [api]);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!heroRef.current) return;
-
       const scrollY = window.scrollY;
-
-      // Opacity effect for content
       const opacity = Math.max(1 - scrollY / 700, 0.2);
       const content = heroRef.current.querySelector(
         ".hero-content"
@@ -69,10 +79,15 @@ const Hero = () => {
   return (
     <div
       ref={heroRef}
-      className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-r from-gray-900 via-gray-800 to-black w-full"
+      className="relative min-h-screen w-full flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black pb-20 sm:pb-24"
     >
-      {/* Background Image Carousel */}
-      <div className="absolute inset-0 z-0 w-full">
+      <CustomCursor color="#FF4B4B" size={40} />
+
+      {/* Background Image Carousel with Parallax */}
+      <motion.div
+        className="absolute inset-0 z-0 w-full h-full"
+        style={{ y: y1 }}
+      >
         <Carousel
           setApi={setApi}
           opts={{
@@ -84,202 +99,449 @@ const Hero = () => {
           <CarouselContent className="h-full">
             {heroImages.map((image, index) => (
               <CarouselItem key={index} className="w-full h-full">
-                <img
-                  src={image}
-                  alt={`Industrial bearings and machinery ${index + 1}`}
-                  className="w-full h-full object-cover"
-                  style={{ opacity: 0.6 }}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  width="1920"
-                  height="1080"
-                  fetchPriority={index === 0 ? "high" : "low"}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src =
-                      "https://images.unsplash.com/photo-1562516710-38a6fa229b23?q=80&w=2070&auto=format&fit=crop";
-                    target.alt = "Fallback industrial bearing image";
-                  }}
-                />
+                <div className="relative w-full h-full min-h-screen">
+                  <img
+                    src={image}
+                    alt={`Industrial bearings and machinery ${index + 1}`}
+                    className="absolute inset-0 w-full h-full object-cover object-center"
+                    style={{ opacity: 0.6 }}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    width="1920"
+                    height="1080"
+                    fetchPriority={index === 0 ? "high" : "low"}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src =
+                        "https://images.unsplash.com/photo-1562516710-38a6fa229b23?q=80&w=2070&auto=format&fit=crop";
+                      target.alt = "Fallback industrial bearing image";
+                    }}
+                  />
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          {/* Carousel arrows commented out
-          <CarouselPrevious className="z-20" />
-          <CarouselNext className="z-20" />
-          */}
         </Carousel>
         {/* Dark overlay on top of image */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/60"></div>
-      </div>
+      </motion.div>
+
+      {/* Animated background elements */}
+      <motion.div className="absolute inset-0 z-0" style={{ y: y2 }}>
+        <div className="absolute w-[500px] h-[500px] rounded-full bg-gbi-700/10 blur-3xl top-1/4 -right-20 animate-pulse" />
+        <div
+          className="absolute w-[600px] h-[600px] rounded-full bg-gbi-800/5 blur-3xl -bottom-20 -left-20 animate-pulse"
+          style={{ animationDelay: "1s" }}
+        />
+        <div
+          className="absolute w-[400px] h-[400px] rounded-full bg-gbi-600/10 blur-3xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse"
+          style={{ animationDelay: "0.5s" }}
+        />
+      </motion.div>
 
       {/* Red accent line */}
-      <div className="absolute left-0 top-0 bottom-0 w-2 bg-gbi-700 z-10"></div>
+      <motion.div
+        className="absolute left-0 top-0 bottom-0 w-1 bg-gbi-700 z-10"
+        style={{ y: y3 }}
+      />
 
-      {/* Animated particles/circles */}
-      <div className="absolute w-64 h-64 rounded-full bg-gbi-700/10 blur-3xl top-1/4 -right-20 animate-pulse z-10"></div>
-      <div
-        className="absolute w-96 h-96 rounded-full bg-gbi-800/5 blur-3xl -bottom-20 -left-20 animate-pulse z-10"
-        style={{ animationDelay: "1s" }}
-      ></div>
+      <motion.div
+        className="container mx-auto px-4 relative z-20 hero-content pt-20 sm:pt-24 md:pt-28"
+        style={{ opacity }}
+      >
+        <motion.div
+          className="max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          {/* GBI Logo in center */}
+          <motion.div
+            className="flex justify-center mb-6 sm:mb-8"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32">
+              <motion.svg
+                viewBox="0 0 100 100"
+                className="w-full h-full"
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              >
+                {/* Outer ring */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  stroke="#C0C0C0"
+                  strokeWidth="4"
+                  fill="none"
+                  opacity="0.5"
+                />
+                {/* Inner ring */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="25"
+                  stroke="#C0C0C0"
+                  strokeWidth="2"
+                  fill="none"
+                  opacity="0.5"
+                />
+                {/* Bearing balls */}
+                {[...Array(12)].map((_, i) => {
+                  const angle = (i * 360) / 12;
+                  const rad = (angle * Math.PI) / 180;
+                  const r = 35; // midway between 25 and 45
+                  const cx = 50 + r * Math.cos(rad);
+                  const cy = 50 + r * Math.sin(rad);
+                  return (
+                    <circle
+                      key={i}
+                      cx={cx}
+                      cy={cy}
+                      r="4.5"
+                      fill="#C0C0C0"
+                      opacity="0.8"
+                    />
+                  );
+                })}
+              </motion.svg>
+              {/* GBI Logo in center */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-gbi-700 rounded-lg px-1.5 py-0.5 transform scale-[0.9]">
+                  <span className="text-white font-bold text-base sm:text-xl tracking-wider">
+                    GBI
+                  </span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
-      <div className="container mx-auto px-4 relative z-20 hero-content">
-        <div className="max-w-3xl">
-          <h1
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-title font-bold text-white mb-3 sm:mb-4 animate-fade-in"
-            style={{ textShadow: "0 4px 8px rgba(0,0,0,0.3)" }}
+          <motion.h1
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-title font-bold text-white mb-3 sm:mb-4 md:mb-6 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="text-gradient bg-gradient-to-r from-gbi-500 to-gbi-700">
               Precision
             </span>{" "}
             in Motion
-          </h1>
+          </motion.h1>
 
-          <h2
-            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 font-light mb-6 sm:mb-8 animate-fade-in"
-            style={{ animationDelay: "0.2s" }}
+          <motion.h2
+            className="text-sm xs:text-base sm:text-lg md:text-xl text-white/90 font-light mb-4 sm:mb-6 md:mb-8 max-w-2xl mx-auto text-center px-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
             Leading manufacturer of precision bearings in Gujarat, delivering
             excellence in ball and tapered bearings for India's industrial
             applications
-          </h2>
+          </motion.h2>
 
-          <div
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-in"
-            style={{ animationDelay: "0.4s" }}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
           >
-            {/* Explore Bearings button commented out
             <Link
               to="/products"
-              className="btn-primary group bg-gbi-700 hover:bg-gbi-800 py-3 px-6 text-base flex items-center"
+              className="group relative inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 overflow-hidden font-medium transition duration-300 ease-out rounded-lg shadow-md bg-gbi-700 hover:bg-gbi-800 text-white text-sm sm:text-base"
             >
-              Explore Bearings
-              <ChevronRight
-                size={20}
-                className="ml-2 transition-transform group-hover:translate-x-1"
-              />
+              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-gbi-800 group-hover:translate-x-0 ease">
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </span>
+              <span className="absolute flex items-center justify-center w-full h-full text-white transition-all duration-300 transform group-hover:translate-x-full ease">
+                Explore Products
+              </span>
+              <span className="relative invisible">Explore Products</span>
             </Link>
-            */}
 
             <Link
               to="/contact"
-              className="btn-secondary py-2.5 sm:py-3 px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center"
+              className="group relative inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 overflow-hidden font-medium transition duration-300 ease-out rounded-lg shadow-md bg-white/10 hover:bg-white/20 text-white backdrop-blur-sm text-sm sm:text-base"
             >
-              Get a Quote
-              <ArrowRight
-                size={18}
-                className="ml-2 transition-transform group-hover:translate-x-1"
-              />
+              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-white/20 group-hover:translate-x-0 ease">
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </span>
+              <span className="absolute flex items-center justify-center w-full h-full text-white transition-all duration-300 transform group-hover:translate-x-full ease">
+                Get a Quote
+              </span>
+              <span className="relative invisible">Get a Quote</span>
             </Link>
-          </div>
+          </motion.div>
 
-          {/* Discount Details */}
-          <div
-            className="flex items-center mt-4 sm:mt-6 mb-4 sm:mb-6 bg-white/10 backdrop-blur-md rounded-lg p-2.5 sm:p-3 border border-white/20 animate-fade-in"
-            style={{ animationDelay: "0.5s" }}
+          {/* Stats Section with parallax */}
+          <motion.div
+            className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 mt-4 sm:mt-6 md:mt-8 px-2 mb-6 sm:mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            style={{ y: y3 }}
           >
-            <div className="bg-gbi-700 h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center shadow-lg">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-white"
+            {[
+              { label: "Years of Excellence", value: "40+" },
+              { label: "Products", value: "100+" },
+              { label: "Industries Served", value: "20+" },
+              { label: "Quality Rating", value: "99.9%" },
+            ].map((stat, index) => (
+              <div
+                key={index}
+                className="bg-white/5 backdrop-blur-sm rounded-lg p-1.5 sm:p-2 border border-white/10"
               >
-                <path d="M5.7 21a2 2 0 0 1-2-1.7L2 13.6a2 2 0 0 1 .5-1.6L10 4.5a2 2 0 0 1 2.8 0l7.5 7.5a2 2 0 0 1 .5 1.6l-1.7 5.7a2 2 0 0 1-2 1.7Z" />
-                <path d="m9 12 3 3" />
-                <path d="M14 12h.01" />
-                <path d="M9 12h.01" />
-              </svg>
-            </div>
-            <div className="ml-2 sm:ml-3 flex-grow">
-              <h3 className="text-white font-semibold text-sm sm:text-base">
-                Special Offer
-              </h3>
-              <p className="text-white/90 text-xs sm:text-sm">
-                Get <span className="text-gbi-500 font-bold">60% OFF</span> on
-                all bearings. Limited time offer!
-              </p>
-            </div>
-          </div>
+                <div className="text-sm sm:text-lg md:text-xl font-bold text-gbi-500 mb-0.5">
+                  {stat.value}
+                </div>
+                <div className="text-[8px] sm:text-[10px] md:text-xs text-white/70 leading-tight">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </motion.div>
 
-          <div
-            className="flex flex-col sm:flex-row items-start sm:items-center mt-4 sm:mt-6 space-y-2 sm:space-y-0 sm:space-x-3 animate-fade-in"
-            style={{ animationDelay: "0.6s" }}
-          >
-            <div className="flex items-center bg-white/10 backdrop-blur-md rounded-md px-2.5 sm:px-3 py-2 sm:py-2.5 w-full sm:w-auto">
-              <div className="bg-gbi-700 h-6 w-6 sm:h-7 sm:w-7 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-white"
-                >
-                  <path d="M12 4C5.6 9.4 3.8 12.6 3.9 18.4 5 19.5 7 19.5 8.2 19.5 10.3 19.5 12.6 18.5 13.3 17M15.1 20.2c1.1-.5 3-.8 4.9-2.2.5-1.7.5-9 .5-11 0-4-3-5-6.5-5S8 3 8 7c0 2.5 0 8 2 11.5 2 3.5 5 2 5.1 1.7Z"></path>
-                  <path d="M12 4C5.6 9.4 3.8 12.6 3.9 18.4 5 19.5 7 19.5 8.2 19.5 10.3 19.5 12.6 18.5 13.3 17"></path>
-                </svg>
-              </div>
-              <div className="ml-2">
-                <p className="text-white/90 text-[10px] sm:text-xs font-medium">
-                  INDUSTRY STANDARD
-                </p>
-                <p className="text-white text-[10px] sm:text-xs">
-                  ISO 9001 Certified
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center bg-white/10 backdrop-blur-md rounded-md px-2.5 sm:px-3 py-2 sm:py-2.5 w-full sm:w-auto">
-              <div className="bg-gbi-700 h-6 w-6 sm:h-7 sm:w-7 rounded-full flex items-center justify-center shadow-lg">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-white"
-                >
-                  <path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.179 3.179c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 3.5 12c0-.617.236-1.234.706-1.704L5.818 8.69a.979.979 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.179-3.179c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.61a2.404 2.404 0 0 1 1.705-.707 2.402 2.402 0 0 1 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-              </div>
-              <div className="ml-2">
-                <p className="text-white/90 text-[10px] sm:text-xs font-medium">
-                  PRECISION ENGINEERED
-                </p>
-                <p className="text-white text-[10px] sm:text-xs">
-                  Tolerance to 0.001mm
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div
-        className="fixed bottom-6 left-0 right-0 flex flex-col items-center justify-center animate-bounce z-20 cursor-pointer"
+      {/* Scroll indicator with parallax - hidden on small screens */}
+      <motion.div
+        className="hidden sm:flex fixed bottom-8 left-0 right-0 flex-col items-center justify-center z-20 cursor-pointer"
         onClick={handleScrollDown}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1 }}
+        style={{ y: y2 }}
       >
-        <span className="text-white/80 text-xs sm:text-sm font-medium mb-1 sm:mb-2">
+        <span className="text-white/80 text-sm font-medium mb-2">
           Scroll Down
         </span>
-        <ChevronRight size={20} className="text-white/80 transform rotate-90" />
-      </div>
+        <div className="w-6 h-10 border-2 border-white/80 rounded-full flex justify-center">
+          <motion.div
+            className="w-1.5 h-1.5 bg-white/80 rounded-full mt-2"
+            animate={{
+              y: [0, 12, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "loop",
+            }}
+          />
+        </div>
+      </motion.div>
+
+      {/* Draggable Offer Section */}
+      <motion.div
+        className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-30 block sm:block"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
+        style={{
+          opacity: useTransform(scrollY, [0, 500], [1, 0]),
+          display: useTransform(scrollY, [0, 500], ["block", "none"]),
+        }}
+        drag
+        dragControls={dragControls}
+        dragMomentum={true}
+        dragConstraints={heroRef}
+        dragElastic={0.2}
+        dragTransition={{
+          bounceStiffness: 200,
+          bounceDamping: 15,
+          power: 0.8,
+          timeConstant: 200,
+        }}
+        whileDrag={{
+          scale: 1.05,
+          transition: {
+            duration: 0.2,
+            ease: "easeOut",
+          },
+        }}
+        onDragEnd={(event, info) => {
+          if (!heroRef.current) return;
+
+          const rect = heroRef.current.getBoundingClientRect();
+          const elementRect = (
+            event.target as HTMLElement
+          ).getBoundingClientRect();
+
+          // Calculate boundaries
+          const maxX = rect.width - elementRect.width;
+          const maxY = rect.height - elementRect.height;
+
+          // Get current position
+          const currentX = info.point.x;
+          const currentY = info.point.y;
+
+          // Calculate bounce
+          let bounceX = 0;
+          let bounceY = 0;
+
+          // X-axis bounce
+          if (currentX < 0) {
+            bounceX = Math.abs(currentX) * 0.3;
+          } else if (currentX > maxX) {
+            bounceX = -(currentX - maxX) * 0.3;
+          }
+
+          // Y-axis bounce
+          if (currentY < 0) {
+            bounceY = Math.abs(currentY) * 0.3;
+          } else if (currentY > maxY) {
+            bounceY = -(currentY - maxY) * 0.3;
+          }
+
+          // Apply physics-based bounce
+          return {
+            x: bounceX,
+            y: bounceY,
+            transition: {
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+              mass: 1,
+              velocity: {
+                x: info.velocity.x * 0.5,
+                y: info.velocity.y * 0.5,
+              },
+            },
+          };
+        }}
+      >
+        <div className="relative max-w-[240px] sm:max-w-[280px]">
+          {/* Tooltip - only visible in collapsed state */}
+          <motion.div
+            className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gbi-700 text-white text-xs px-2 py-1 rounded-md whitespace-nowrap flex items-center gap-1"
+            initial={{ opacity: 0, y: 5 }}
+            animate={{
+              opacity: isExpanded ? 0 : 1,
+              y: isExpanded ? 5 : 0,
+              visibility: isExpanded ? "hidden" : "visible",
+            }}
+            transition={{
+              duration: 0.2,
+              opacity: { duration: 0.2 },
+              visibility: { delay: isExpanded ? 0 : 0.2 },
+            }}
+          >
+            <span>Offer</span>
+            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gbi-700 rotate-45"></div>
+          </motion.div>
+
+          {/* Main offer card */}
+          <motion.div
+            className="relative bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg overflow-hidden cursor-pointer"
+            animate={{
+              height: isExpanded ? "auto" : "40px",
+              width: isExpanded ? "240px" : "40px",
+            }}
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut",
+              height: { duration: 0.3 },
+              width: { duration: 0.3 },
+            }}
+            onClick={() => !isExpanded && setIsExpanded(true)}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {/* Drag handle for mobile */}
+            <div
+              className="absolute top-0 left-0 w-full h-10 flex items-center justify-center cursor-move"
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                dragControls.start(e);
+              }}
+            >
+              <div className="w-6 h-1 bg-white/30 rounded-full" />
+            </div>
+
+            {/* Close button - only visible in expanded view */}
+            <motion.button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(false);
+              }}
+              className="absolute top-2 right-2 text-white/70 hover:text-white transition-colors duration-200 z-10"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: isExpanded ? 1 : 0,
+                visibility: isExpanded ? "visible" : "hidden",
+              }}
+              transition={{
+                duration: 0.2,
+                opacity: { duration: 0.2 },
+                visibility: { delay: isExpanded ? 0 : 0.2 },
+              }}
+            >
+              <X size={16} />
+            </motion.button>
+
+            {/* Offer content */}
+            <motion.div
+              className="p-3 sm:p-4"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: isExpanded ? 1 : 0,
+                visibility: isExpanded ? "visible" : "hidden",
+              }}
+              transition={{
+                duration: 0.2,
+                opacity: { duration: 0.2 },
+                visibility: { delay: isExpanded ? 0 : 0.2 },
+              }}
+            >
+              <div className="flex items-center justify-between gap-2 sm:gap-3">
+                <div className="flex-1">
+                  <h3 className="text-white font-bold text-sm sm:text-base mb-0.5">
+                    Special Offer
+                  </h3>
+                  <p className="text-white/80 text-xs sm:text-sm leading-tight">
+                    Get up to 60% off on bulk orders
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <div className="bg-gbi-700 rounded-full p-1.5 sm:p-2">
+                    <span className="text-white font-bold text-sm sm:text-base">
+                      up to 60%
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-1.5 sm:mt-2 pt-1.5 sm:pt-2 border-t border-white/10">
+                <p className="text-white/70 text-[10px] sm:text-xs leading-tight">
+                  Limited time offer
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Collapsed state - always visible when not expanded */}
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center cursor-pointer"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: isExpanded ? 0 : 1,
+                visibility: isExpanded ? "hidden" : "visible",
+              }}
+              transition={{
+                duration: 0.2,
+                opacity: { duration: 0.2 },
+                visibility: { delay: isExpanded ? 0.2 : 0 },
+              }}
+            >
+              <div className="bg-gbi-700 rounded-full p-2 flex items-center justify-center">
+                <span className="text-white font-bold text-sm">60%</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.div>
     </div>
   );
 };
